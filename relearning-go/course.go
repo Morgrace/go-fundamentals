@@ -93,12 +93,10 @@ func lessons() {
 			fmt.Printf("\nvalue: %v\n", value)
 		}
 	}
-}
-func main() {
 
 	// SLICES
 	// var sliceName[]elementType
-	var numbers []int
+	// var numbers4 []int
 	numbers2 := []int{9, 8, 9}
 
 	var numbers3 = [5]int{1, 2, 3, 4, 5}
@@ -134,4 +132,43 @@ func main() {
 	value, ok := myMap["key1"]
 	fmt.Print(value, ok)
 
+}
+
+// This Returns Named Variables
+func divide2(a, b int) (quotient int, remainder int) {
+	quotient = a / b
+	remainder = a % b
+	return
+}
+
+// Variadic functions
+func sum(numbers ...int) int {
+	total := 0
+	for _, value := range numbers {
+		total += value
+	}
+	return total
+}
+
+func divide(a, b int) (int, int) {
+	quotient := a / b
+	remainder := a % b
+	return quotient, remainder
+}
+
+func process() {
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Println("Recovered:", r)
+		}
+	}()
+
+	fmt.Println("Start Process")
+	panic("something went wrong!")
+	fmt.Print("Nothing runs after a panic")
+}
+
+func main() {
+	process()
+	fmt.Println("Returned from process")
 }
