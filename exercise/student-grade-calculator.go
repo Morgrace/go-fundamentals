@@ -13,14 +13,15 @@ import (
 // Uses switch statement for grade assignment
 // Allows adding multiple students until user exits
 
+const MAX_SUBJECT = 9
+
 var studentScorePerSubject = make(map[string]int)
 var subject string
 var score int
 
 func gradeCalculator() {
 	numberOfSubjects := 1
-	maxSubject := 9
-	for numberOfSubjects <= maxSubject {
+	for numberOfSubjects <= MAX_SUBJECT {
 
 		fmt.Printf("\n>>Please enter subject (%d)\n>>", numberOfSubjects)
 
@@ -44,6 +45,42 @@ func gradeCalculator() {
 	fmt.Println("HIGHEST SCORE:", highestScore)
 	fmt.Println("LOWEST SCORE:", lowestScore)
 	fmt.Println("AVERAGE SCORE:", averageScore)
+
+	fmt.Printf("BELOW ARE YOU GRADES PER SUBJECT:\n%v\n", gradeAssignment(studentScorePerSubject))
+}
+
+func gradeAssignment(data map[string]int) map[string]string {
+	subjectGrade := map[string]string{}
+
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Println("Recovered", r)
+		}
+	}()
+
+	for key, value := range data {
+
+		if value < 0 || value > 100 {
+			errorMessage := fmt.Sprintf("\nUnknown Error Has occurred: Invalid score %v\n", value)
+			panic(errorMessage)
+		}
+
+		switch {
+		case value >= 80:
+			subjectGrade[key] = "A"
+		case value >= 65:
+			subjectGrade[key] = "B"
+		case value >= 50:
+			subjectGrade[key] = "C"
+		case value >= 40:
+			subjectGrade[key] = "D"
+		case value >= 30:
+			subjectGrade[key] = "E"
+		default:
+			subjectGrade[key] = "F"
+		}
+	}
+	return subjectGrade
 }
 
 func storeScorePerSubject(subject string, score int) {
@@ -89,6 +126,10 @@ func findMin(numbers []int) int {
 		}
 	}
 	return min
+}
+
+func init() {
+	fmt.Println("STUDENT GRADE CALCULATOR")
 }
 
 func main() {
