@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func init() {
 	fmt.Println("--------------------This is Intermediate Go----------------------")
@@ -25,14 +27,19 @@ func init() {
 // 	}
 // }
 
-// func main() {
-// 	var ptr *int
-// 	var a int = 10
-// 	ptr = &a // referencing a pointer
-// 	fmt.Println(ptr)
-// 	fmt.Println(a)
-// 	fmt.Println(*ptr) // deferencing a pointer
-// }
+//	func main() {
+//		var ptr *int
+//		var a int = 10
+//		ptr = &a // referencing a pointer
+//		fmt.Println(ptr)
+//		fmt.Println(a)
+//		fmt.Println(*ptr) // deferencing a pointer
+//	}
+type Person struct {
+	firstName string
+	lastName  string
+	age       int
+}
 
 // Strings and Runes
 func main() {
@@ -51,4 +58,30 @@ func main() {
 	for index, character := range message {
 		fmt.Printf("String at index %d is %c\n", index, character)
 	}
+
+	p := Person{
+		firstName: "morgrace",
+		age:       27,
+		lastName:  "Precious",
+	}
+	p.incrementAgebyOne()
+	fmt.Println(p.fullName())
+	fmt.Printf("Your name is %s and you are %d years old\n", p.firstName, p.age)
+
+	// anonymous structs
+	user := struct {
+		name     string
+		language string
+	}{
+		name:     "Ada",
+		language: "Ogoni",
+	}
+	fmt.Println(user)
+
+}
+func (p Person) fullName() string {
+	return p.firstName + " " + p.lastName
+}
+func (p *Person) incrementAgebyOne() {
+	p.age++
 }
